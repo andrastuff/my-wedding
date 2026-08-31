@@ -40,7 +40,7 @@ export const wedding = {
   ],
   // Ganti data di bawah dengan rekening asli sebelum undangan dibagikan.
   giftAccounts: [
-    { bank: "Bank BCA", number: "0000 0000 0000", holder: "a.n. Ardi Mahendra" },
-    { bank: "Bank BRI", number: "0000 0000 0000", holder: "a.n. Dwi Wahyulita" },
+    { bank: "Bank BCA", number: "775 176 1019", holder: "a.n. Ardi Mahendra" },
+    { bank: "Bank BNI", number: "185 300 7509", holder: "a.n. Dwi Wahyulita" },
   ],
 };
