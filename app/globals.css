@@ -290,7 +290,7 @@ img {
 
 .opening-title h1 {
   margin: 0 0 6px;
-  font: 400 clamp(43px, 11.4vw, 72px)/1.14 var(--font-script);
+  font: 600 clamp(43px, 11.4vw, 72px)/1.14 var(--font-monogram);
   color: var(--maroon);
   text-shadow: 0 3px 18px rgba(98, 54, 47, .13);
 }
@@ -898,7 +898,7 @@ img {
 
 .hero-content h1 {
   margin: 6px 0 -3px;
-  font: 400 clamp(58px, 15vw, 88px)/.95 var(--font-script);
+  font: 600 clamp(58px, 15vw, 88px)/.95 var(--font-monogram);
   text-shadow: 0 0 8px rgba(255, 255, 255, .26), 0 0 22px rgba(255, 245, 215, .16), 0 5px 18px rgba(0, 0, 0, .3);
   animation: couple-name-glow 3.4s ease-in-out infinite;
 }
@@ -2544,7 +2544,7 @@ img {
 
 .closing-content h2 {
   margin: 0;
-  font: 400 clamp(58px, 14vw, 80px)/1 var(--font-script);
+  font: 600 clamp(58px, 14vw, 80px)/1 var(--font-monogram);
 }
 
 .closing-content h2 i {
