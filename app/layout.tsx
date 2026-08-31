@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     shortcut: "/assets/favicon.png",
     apple: "/assets/favicon.png",
   },
-  description: "Undangan pernikahan Ayu Dwi Wahyulita & Ardi Mahendra — 26 September 2026",
+  description: "Undangan pernikahan Dwi Wahyulita & Ardi Mahendra — 26 September 2026",
   openGraph: {
     title: "The Wedding of Ayu & Ardi",
     description: "Sabtu, 26 September 2026",
