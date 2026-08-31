@@ -24,7 +24,7 @@ export default async function WishesPage() {
         <header className={styles.header}>
           <span><MessageCircleHeart size={18} /> Buku Tamu Digital</span>
           <h1>Ucapan & Kehadiran</h1>
-          <p>Doa dan pesan hangat untuk Ayuu & Ardi.</p>
+          <p>Doa dan pesan hangat untuk Ayu & Ardi.</p>
         </header>
 
         <div className={styles.summary}>

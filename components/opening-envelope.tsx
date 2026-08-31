@@ -39,7 +39,7 @@ export function OpeningEnvelope({ guestName, onOpen, stage }: OpeningEnvelopePro
       <header className="opening-title">
         <span className="opening-eyebrow">Dengan penuh kebahagiaan</span>
         <p>The Wedding of</p>
-        <h1>Ayuu <b>&</b> Ardi</h1>
+        <h1>Ayu <b>&</b> Ardi</h1>
         <span className="opening-date">26 · 09 · 2026</span>
       </header>
 
@@ -49,7 +49,7 @@ export function OpeningEnvelope({ guestName, onOpen, stage }: OpeningEnvelopePro
           <div className="envelope-back" />
           <div className="invitation-letter">
             <small className="letter-kicker">The Wedding of</small>
-            <b className="letter-couple">Ayuu <i>&</i> Ardi</b>
+            <b className="letter-couple">Ayu <i>&</i> Ardi</b>
             <span className="letter-to">Kepada Yth.</span>
             <strong className="letter-guest">{guestName}</strong>
             <em>26 · 09 · 2026</em>

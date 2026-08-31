@@ -523,7 +523,8 @@ img {
 
 .wax-seal {
   position: absolute;
-  z-index: 7;
+  /* Segel harus selalu menjadi area sentuh teratas, terutama di layar kecil. */
+  z-index: 10;
   left: 50%;
   top: 51%;
   width: 84px;
@@ -539,6 +540,7 @@ img {
   flex-direction: column;
   justify-content: center;
   cursor: pointer;
+  touch-action: manipulation;
   font: 400 20px var(--font-script);
   text-align: center;
   transition: transform .35s ease, opacity .25s ease .28s, box-shadow .35s ease;

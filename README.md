@@ -1,4 +1,4 @@
-# Undangan Pernikahan Ayuu & Ardi
+# Undangan Pernikahan Ayu & Ardi
 
 Undangan one-page berbasis Next.js dengan pembuka amplop, nama tamu dari URL, countdown, detail acara, galeri, wedding gift, ucapan lokal, dan animasi penutup.
 

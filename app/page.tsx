@@ -64,13 +64,13 @@ function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) 
 function Hero({ guestName }: { guestName: string }) {
   return (
     <section className="hero" id="home">
-      <Image className="hero-photo" src={wedding.photos[0]} alt="Ayuu dan Ardi dalam busana adat Lampung" fill priority sizes="(max-width: 720px) 100vw, 620px" />
+      <Image className="hero-photo" src={wedding.photos[0]} alt="Ayu dan Ardi dalam busana adat Lampung" fill priority sizes="(max-width: 720px) 100vw, 620px" />
       <div className="hero-shade" />
       <div className="hero-frame" />
       <div className="hero-monogram" aria-hidden="true"><span>A</span><i>&</i><span>A</span></div>
       <div className="hero-content">
         <p className="hero-kicker">The Wedding of</p>
-        <h1>Ayuu <span>&</span> Ardi</h1>
+        <h1>Ayu <span>&</span> Ardi</h1>
         <p className="hero-date">Sabtu · 26 September · 2026</p>
         <div className="hero-dove-pair" aria-hidden="true">
           <Image className="content-dove content-dove-left" src="/assets/dove.svg" alt="" width={180} height={104} />
@@ -101,7 +101,7 @@ function Welcome() {
 
       <div className="heritage-pair">
         <figure className="welcome-portrait welcome-portrait-lampung reveal">
-          <Image src={wedding.welcomePortrait} alt="Ayuu dan Ardi dalam busana adat Lampung" fill sizes="(max-width: 620px) 82vw, 430px" />
+          <Image src={wedding.welcomePortrait} alt="Ayu dan Ardi dalam busana adat Lampung" fill sizes="(max-width: 620px) 82vw, 430px" />
         </figure>
         <div className="couple-block reveal">
           <p className="script-label">The Bride</p>
@@ -149,7 +149,7 @@ function CountdownSection({ countdown }: { countdown: Countdown }) {
         </div>
         <a
           className="light-button"
-          href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=The%20Wedding%20of%20Ayuu%20%26%20Ardi&dates=20260926T010000Z/20260926T070000Z&details=Undangan%20Pernikahan%20Ayuu%20dan%20Ardi&location=Dusun%20Srimenanti%2C%20Negeri%20Sakti%2C%20Pesawaran%2C%20Lampung"
+          href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=The%20Wedding%20of%20Ayu%20%26%20Ardi&dates=20260926T010000Z/20260926T070000Z&details=Undangan%20Pernikahan%20Ayu%20dan%20Ardi&location=Dusun%20Srimenanti%2C%20Negeri%20Sakti%2C%20Pesawaran%2C%20Lampung"
           target="_blank"
           rel="noreferrer"
         >
@@ -215,7 +215,7 @@ function EventSection() {
 function QuoteSection() {
   return (
     <section className="quote-section">
-      <Image src={wedding.photos[3]} alt="Ayuu dan Ardi dalam busana adat Jawa" fill sizes="(max-width: 720px) 100vw, 620px" />
+      <Image src={wedding.photos[3]} alt="Ayu dan Ardi dalam busana adat Jawa" fill sizes="(max-width: 720px) 100vw, 620px" />
       <div className="quote-overlay" />
       <blockquote className="reveal">
         <span>“</span>
@@ -268,9 +268,9 @@ function GallerySection() {
               key={photo}
               type="button"
               onClick={() => setActivePhotoIndex(index)}
-              aria-label={`Lihat foto prewedding Ayuu dan Ardi ${index + 1}`}
+              aria-label={`Lihat foto prewedding Ayu dan Ardi ${index + 1}`}
             >
-              <Image src={photo} alt={`Foto prewedding Ayuu dan Ardi ${index + 1}`} fill sizes="(max-width: 720px) 50vw, 300px" />
+              <Image src={photo} alt={`Foto prewedding Ayu dan Ardi ${index + 1}`} fill sizes="(max-width: 720px) 50vw, 300px" />
               <span>0{index + 1}</span>
               <em>lihat foto</em>
             </button>
@@ -286,10 +286,10 @@ function GallerySection() {
             <button className="lightbox-close" type="button" onClick={closeLightbox} aria-label="Tutup preview foto"><X size={20} /></button>
             <button className="lightbox-nav lightbox-prev" type="button" onClick={() => movePhoto(-1)} aria-label="Foto sebelumnya"><ChevronLeft size={25} /></button>
             <div className="lightbox-photo-frame">
-              <Image src={activePhoto} alt={`Preview foto prewedding Ayuu dan Ardi ${activePhotoIndex + 1}`} fill sizes="(max-width: 720px) 94vw, 620px" priority />
+              <Image src={activePhoto} alt={`Preview foto prewedding Ayu dan Ardi ${activePhotoIndex + 1}`} fill sizes="(max-width: 720px) 94vw, 620px" priority />
             </div>
             <button className="lightbox-nav lightbox-next" type="button" onClick={() => movePhoto(1)} aria-label="Foto berikutnya"><ChevronRight size={25} /></button>
-            <div className="lightbox-caption"><span>Ayuu <i>&</i> Ardi</span><b>{String(activePhotoIndex + 1).padStart(2, "0")} <i>/</i> {String(wedding.galleryPhotos.length).padStart(2, "0")}</b></div>
+            <div className="lightbox-caption"><span>Ayu <i>&</i> Ardi</span><b>{String(activePhotoIndex + 1).padStart(2, "0")} <i>/</i> {String(wedding.galleryPhotos.length).padStart(2, "0")}</b></div>
           </div>
         </div>
       )}
@@ -457,12 +457,12 @@ function ClosingSection() {
       <div className="falling-petals" aria-hidden="true">
         {Array.from({ length: 14 }, (_, index) => <i key={index} />)}
       </div>
-      <Image src={wedding.photos[0]} alt="Ayuu dan Ardi" fill sizes="(max-width: 720px) 100vw, 620px" />
+      <Image src={wedding.photos[0]} alt="Ayu dan Ardi" fill sizes="(max-width: 720px) 100vw, 620px" />
       <div className="closing-overlay" />
       <div className="closing-content reveal">
         <p>Terima Kasih</p>
         <span>Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Anda berkenan hadir dan memberikan doa restu.</span>
-        <h2>Ayuu <i>&</i> Ardi</h2>
+        <h2>Ayu <i>&</i> Ardi</h2>
         <small>Wassalamu’alaikum Warahmatullahi Wabarakatuh</small>
         <b>26 · 09 · 2026</b>
       </div>

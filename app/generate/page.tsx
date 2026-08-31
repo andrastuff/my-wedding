@@ -26,7 +26,7 @@ export default function GenerateInvitationPage() {
 
   const whatsappMessage = useMemo(() => {
     if (!invitationUrl) return "";
-    return `Assalamu'alaikum Wr. Wb.\n\nDengan penuh kebahagiaan, kami mengundang Bpk/Ibu *${guestName}* untuk hadir dalam acara pernikahan kami.\n\nBuka undangan lengkapnya di:\n${invitationUrl}\n\nTerima kasih atas doa dan kehadirannya.\n\nAyuu & Ardi`;
+    return `Assalamu'alaikum Wr. Wb.\n\nDengan penuh kebahagiaan, kami bermaksud untuk mengundang Bpk/Ibu *${guestName}* untuk hadir dalam acara pernikahan kami.\n\nBerikut kami lampirkan undangan lengkapnya di bawah ini:\n${invitationUrl}\n\nTerima kasih atas doa dan kehadirannya.\n\nAyu & Ardi`;
   }, [guestName, invitationUrl]);
 
   async function copyInvitationUrl() {

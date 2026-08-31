@@ -32,15 +32,15 @@ const sans = Manrope({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
-  title: "The Wedding of Ayuu & Ardi",
+  title: "The Wedding of Ayu & Ardi",
   icons: {
     icon: [{ url: "/assets/favicon.png", type: "image/png" }],
     shortcut: "/assets/favicon.png",
     apple: "/assets/favicon.png",
   },
-  description: "Undangan pernikahan Ayuu Dwi Wahyulita & Ardi Mahendra — 26 September 2026",
+  description: "Undangan pernikahan Ayu Dwi Wahyulita & Ardi Mahendra — 26 September 2026",
   openGraph: {
-    title: "The Wedding of Ayuu & Ardi",
+    title: "The Wedding of Ayu & Ardi",
     description: "Sabtu, 26 September 2026",
     images: ["/assets/my/DSC_0680%20(2).jpg.jpeg"],
   },

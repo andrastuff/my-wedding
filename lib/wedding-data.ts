@@ -1,7 +1,7 @@
 export const wedding = {
   bride: {
-    shortName: "Ayuu",
-    fullName: "Ayuu Dwi Wahyulita, Amd.Kep",
+    shortName: "Ayu",
+    fullName: "Ayu Dwi Wahyulita, Amd.Kep",
     order: "Putri kedua",
     parents: "Bapak Suhaimi & Ibu Nurhayati, S.Pd.I (Almh)",
   },
@@ -41,6 +41,6 @@ export const wedding = {
   // Ganti data di bawah dengan rekening asli sebelum undangan dibagikan.
   giftAccounts: [
     { bank: "Bank BCA", number: "0000 0000 0000", holder: "a.n. Ardi Mahendra" },
-    { bank: "Bank BRI", number: "0000 0000 0000", holder: "a.n. Ayuu Dwi Wahyulita" },
+    { bank: "Bank BRI", number: "0000 0000 0000", holder: "a.n. Ayu Dwi Wahyulita" },
   ],
 };
