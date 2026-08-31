@@ -67,16 +67,22 @@ export function OpeningEnvelope({ guestName, onOpen, stage }: OpeningEnvelopePro
             className="wax-seal"
             onClick={onOpen}
             aria-label="Klik segel untuk membuka undangan"
-            aria-describedby="seal-instruction"
             disabled={isOpening}
           >
             <span className="seal-monogram">A <i>&</i> A</span>
             <small>Buka</small>
           </button>
-          <div className="seal-callout" id="seal-instruction">
+          <button
+            className="seal-callout"
+            id="seal-instruction"
+            type="button"
+            onClick={onOpen}
+            disabled={isOpening}
+            aria-label="Klik di sini untuk membuka undangan"
+          >
             <i aria-hidden="true">👈</i>
             <span><b>Klik di sini</b><small>untuk membuka</small></span>
-          </div>
+          </button>
         </div>
       </div>
 

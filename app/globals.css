@@ -268,7 +268,7 @@ img {
 
 .opening-title .opening-eyebrow {
   display: inline-block;
-  margin-bottom: 9px;
+  margin-bottom: 11px;
   padding: 5px 13px;
   border: 1px solid rgba(97, 39, 46, .3);
   border-radius: 99px;
@@ -281,7 +281,7 @@ img {
 }
 
 .opening-title p {
-  margin: 0 0 -5px;
+  margin: 0 0 4px;
   color: var(--wine);
   font: 600 10px/1 var(--font-sans);
   text-transform: uppercase;
@@ -289,7 +289,7 @@ img {
 }
 
 .opening-title h1 {
-  margin: 0;
+  margin: 0 0 6px;
   font: 400 clamp(43px, 11.4vw, 72px)/1.14 var(--font-script);
   color: var(--maroon);
   text-shadow: 0 3px 18px rgba(98, 54, 47, .13);
@@ -347,6 +347,7 @@ img {
   height: 238px;
   transform: rotateX(3deg);
   transform-style: preserve-3d;
+  container-type: inline-size;
 }
 
 .envelope-back {
@@ -612,10 +613,12 @@ img {
 .seal-callout {
   position: absolute;
   z-index: 8;
-  top: 64%;
-  left: 50%;
+  /* Berangkat dari pusat segel: 42px adalah tepi segel, sisanya menjadi ruang napas. */
+  /* Titik tengahnya sama dengan segel agar benar-benar berada di sisi kanan. */
+  top: 51%;
+  left: calc(50% + 58px);
   display: flex;
-  width: 84px;
+  width: 78px;
   align-items: center;
   gap: 5px;
   padding: 5px 6px 6px;
@@ -624,12 +627,13 @@ img {
   color: #59242b;
   background: rgba(255, 250, 238, .97);
   box-shadow: 0 8px 19px rgba(92, 48, 38, .16), inset 0 1px rgba(255, 255, 255, .9);
-  transform: translate(10px, -50%);
+  cursor: pointer;
+  transform: translateY(-50%);
   transition: opacity .25s ease, transform .3s ease;
 }
 
-.seal-callout::before {
-  display: none;
+.seal-callout:disabled {
+  cursor: default;
 }
 
 .seal-callout>i {
@@ -697,7 +701,7 @@ img {
 
 .opening-screen:not(.stage-sealed) .seal-callout {
   opacity: 0;
-  transform: translate(16px, -50%);
+  transform: translate(7px, -50%);
   transition: opacity .25s ease, transform .3s ease;
 }
 
@@ -3003,13 +3007,6 @@ img {
     bottom: 18px;
   }
 
-  .seal-callout {
-    top: 64%;
-    left: 50%;
-    width: 84px;
-    min-height: 30px;
-  }
-
   .invitation-letter {
     height: 170px;
   }
@@ -3019,7 +3016,7 @@ img {
   }
 
   .hero-content {
-    padding: 70px 21px max(112px, calc(80px + env(safe-area-inset-bottom)));
+    padding: 70px 21px max(92px, calc(64px + env(safe-area-inset-bottom)));
   }
 
   .portrait {
@@ -3129,23 +3126,11 @@ img {
   }
 }
 
-@media (min-width: 481px) {
+@container (min-width: 380px) {
   .seal-callout {
-    top: 51%;
-    right: auto;
-    left: calc(50% + 54px);
+    right: 16px;
+    left: auto;
     width: 140px;
-    transform: translateY(-50%);
-  }
-
-  .seal-callout::before {
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: -11px;
-    width: 9px;
-    border-top: 1px dashed #b88a3e;
-    transform: translateY(-50%);
   }
 
   .seal-callout>i {
@@ -3161,6 +3146,34 @@ img {
 
   .seal-callout small {
     font-size: 7px;
+  }
+}
+
+@container (max-width: 379px) {
+  .seal-callout {
+    left: calc(50% + 54px);
+    width: 115px;
+    justify-content: flex-start;
+  }
+
+  .seal-callout>i {
+    display: grid;
+    flex-basis: 22px;
+    width: 22px;
+    height: 22px;
+  }
+
+  .seal-callout span {
+    width: auto;
+    text-align: left;
+  }
+
+  .seal-callout b {
+    font-size: 7px;
+  }
+
+  .seal-callout small {
+    font-size: 6px;
   }
 }
 
