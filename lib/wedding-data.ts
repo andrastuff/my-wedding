@@ -13,7 +13,7 @@ export const wedding = {
   },
   dateISO: "2026-09-26T08:00:00+07:00",
   displayDate: "Sabtu, 26 September 2026",
-  akad: "08.00 WIB s.d selesai",
+  akad: "08.30 WIB s.d selesai",
   reception: "10.00 – 14.00 WIB",
   unduhMantu: {
     displayDate: "Senin, 28 September 2026",
