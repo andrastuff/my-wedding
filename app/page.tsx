@@ -564,10 +564,14 @@ function FloatingNav() {
   );
 }
 
-function WeddingInvitation() {
+function WeddingInvitation({ initialGuestName }: { initialGuestName?: string }) {
   const searchParams = useSearchParams();
   const requestedGuest = searchParams.get("for")?.trim();
-  const guestName = requestedGuest ? formatGuestName(requestedGuest.slice(0, 70)) : "Bapak/Ibu/Saudara/i";
+  const guestName = initialGuestName
+    ? formatGuestName(initialGuestName.slice(0, 70))
+    : requestedGuest
+      ? formatGuestName(requestedGuest.slice(0, 70))
+      : "Bapak/Ibu/Saudara/i";
   const [stage, setStage] = useState<OpeningStage>("sealed");
   const [countdown, setCountdown] = useState<Countdown>(emptyCountdown);
   const musicRef = useRef<HTMLAudioElement>(null);
@@ -648,10 +652,10 @@ function WeddingInvitation() {
   );
 }
 
-export default function WeddingPage() {
+export default function WeddingPage({ initialGuestName }: { initialGuestName?: string } = {}) {
   return (
     <Suspense fallback={<div className="loading-screen">Mempersiapkan undangan…</div>}>
-      <WeddingInvitation />
+      <WeddingInvitation initialGuestName={initialGuestName} />
     </Suspense>
   );
 }

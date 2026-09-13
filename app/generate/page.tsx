@@ -23,8 +23,7 @@ export default function GenerateInvitationPage() {
 
   const invitationUrl = useMemo(() => {
     if (!guestName || typeof window === "undefined") return "";
-    const url = new URL("/", window.location.origin);
-    url.searchParams.set("for", guestName);
+    const url = new URL(`/to/${encodeURIComponent(guestName)}`, window.location.origin);
     return url.toString();
   }, [guestName]);
 

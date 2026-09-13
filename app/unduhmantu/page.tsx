@@ -370,10 +370,10 @@ function UnduhMantuContent({ guestName }: { guestName: string }) {
   );
 }
 
-function UnduhMantuPageContent() {
+function UnduhMantuPageContent({ initialGuestName }: { initialGuestName?: string }) {
   const searchParams = useSearchParams();
   const requestedGuest = searchParams.get("for")?.slice(0, 70) ?? "";
-  const guestName = formatGuestName(requestedGuest) || "Bapak/Ibu/Saudara/i";
+  const guestName = formatGuestName(initialGuestName?.slice(0, 70) ?? requestedGuest) || "Bapak/Ibu/Saudara/i";
   const [opened, setOpened] = useState(false);
   const [musicPlaying, setMusicPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -417,10 +417,10 @@ function UnduhMantuPageContent() {
   );
 }
 
-export default function UnduhMantuPage() {
+export default function UnduhMantuPage({ initialGuestName }: { initialGuestName?: string } = {}) {
   return (
     <Suspense fallback={<div className={styles.loading}>Menyiapkan undangan…</div>}>
-      <UnduhMantuPageContent />
+      <UnduhMantuPageContent initialGuestName={initialGuestName} />
     </Suspense>
   );
 }

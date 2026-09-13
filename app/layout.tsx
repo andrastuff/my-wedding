@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Dancing_Script, Great_Vibes, Manrope } from "next/font/google";
+import { TouchFlowerTrail } from "@/components/touch-flower-trail";
 import "./globals.css";
 
 const serif = Cormorant_Garamond({
@@ -55,7 +56,10 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="id">
-      <body className={`${serif.variable} ${script.variable} ${monogram.variable} ${sans.variable}`}>{children}</body>
+      <body className={`${serif.variable} ${script.variable} ${monogram.variable} ${sans.variable}`}>
+        {children}
+        <TouchFlowerTrail />
+      </body>
     </html>
   );
 }
