@@ -484,12 +484,28 @@
 
 .closing {
   position: relative;
+  overflow: hidden;
   padding: 85px 28px 65px;
   color: #f6e7c9;
   text-align: center;
   background:
     radial-gradient(circle at 50% 0, rgba(185, 132, 65, .18), transparent 35%),
     #382016;
+}
+
+.closing::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  opacity: .2;
+  background:
+    radial-gradient(circle at 50% 0, transparent 10px, #d1a45c 11px, transparent 12px) 0 0 / 30px 30px,
+    url('/assets/shape.png') center / 300px repeat;
+  mix-blend-mode: screen;
+}
+
+.closing > * {
+  position: relative;
 }
 
 .closingIcon {
