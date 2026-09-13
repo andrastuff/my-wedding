@@ -366,7 +366,7 @@
 
 .parentPortrait {
   position: relative;
-  width: min(80%, 350px);
+  width: min(92%, 430px);
   aspect-ratio: 4 / 5;
   margin: 38px auto 24px;
   overflow: hidden;
