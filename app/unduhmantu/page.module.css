@@ -233,7 +233,7 @@
 .coverInvitation button { padding: 0 24px; }
 
 .contentHidden { visibility: hidden; height: 100svh; overflow: hidden; }
-.contentVisible { animation: reveal-page .8s ease both; }
+.contentVisible { animation: reveal-page .8s ease; }
 
 .invitation {
   width: min(100%, 680px);
@@ -500,13 +500,15 @@
 
 .lightbox {
   position: fixed;
-  z-index: 50;
+  z-index: 100;
   inset: 0;
   display: grid;
   padding: 64px 18px;
   place-items: center;
   background: rgba(19, 10, 7, .94);
   backdrop-filter: blur(12px);
+  overscroll-behavior: contain;
+  touch-action: pan-y pinch-zoom;
 }
 
 .lightbox figure {

@@ -32,7 +32,7 @@ export default function GenerateInvitationPage() {
     if (!invitationUrl) return "";
 
     const coupleName = `${wedding.bride.shortName} & ${wedding.groom.shortName}`;
-    const eventDetails = `*${coupleName}*\n\nYang akan dilaksanakan pada:\n🗓️ ${wedding.displayDate}\n⏰ Akad Nikah: ${wedding.akad}\n⏰ Resepsi: ${wedding.reception}\n📍 ${wedding.address}\n\nInformasi lengkap acara kami:\n${invitationUrl}\n\nMohon berkenan mengisi ucapan dan konfirmasi kehadiran. Terima kasih.`;
+    const eventDetails = `*${coupleName}*\n\nYang akan dilaksanakan pada:\n🗓️ ${wedding.displayDate}\n⏰ Akad Nikah: ${wedding.akad}\n⏰ Resepsi: ${wedding.reception}\n📍 ${wedding.address}\n\nInformasi lengkap acara kami:\n${invitationUrl}`;
 
     if (messageStyle === "general") {
       return `Dengan penuh sukacita,\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i *${guestName}* untuk hadir dan memberikan doa restu pada acara pernikahan kami:\n\n${eventDetails}\n\nHormat kami,\n*${coupleName.toLocaleUpperCase("id-ID")}*`;

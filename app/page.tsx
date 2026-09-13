@@ -23,7 +23,7 @@ import {
   UsersRound,
   X,
 } from "lucide-react";
-import { FormEvent, Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { FormEvent, Suspense, type TouchEvent, useEffect, useMemo, useRef, useState } from "react";
 import { WeddingField } from "@/components/ui/wedding-field";
 import { OpeningEnvelope, type OpeningStage } from "@/components/opening-envelope";
 import { wedding } from "@/lib/wedding-data";
@@ -228,6 +228,8 @@ function QuoteSection() {
 
 function GallerySection() {
   const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
   const activePhoto = activePhotoIndex === null ? null : wedding.galleryPhotos[activePhotoIndex];
 
   const closeLightbox = () => setActivePhotoIndex(null);
@@ -236,6 +238,23 @@ function GallerySection() {
       if (current === null) return 0;
       return (current + direction + wedding.galleryPhotos.length) % wedding.galleryPhotos.length;
     });
+  };
+
+  const handleLightboxTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    touchStartX.current = event.changedTouches[0].clientX;
+    touchStartY.current = event.changedTouches[0].clientY;
+  };
+
+  const handleLightboxTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+
+    const distanceX = event.changedTouches[0].clientX - touchStartX.current;
+    const distanceY = event.changedTouches[0].clientY - touchStartY.current;
+    touchStartX.current = null;
+    touchStartY.current = null;
+
+    if (Math.abs(distanceX) < 45 || Math.abs(distanceX) <= Math.abs(distanceY)) return;
+    movePhoto(distanceX > 0 ? -1 : 1);
   };
 
   useEffect(() => {
@@ -280,7 +299,15 @@ function GallerySection() {
       </section>
 
       {activePhoto && activePhotoIndex !== null && (
-        <div className="gallery-lightbox" role="dialog" aria-modal="true" aria-label={`Preview foto ${activePhotoIndex + 1}`} onMouseDown={(event) => { if (event.target === event.currentTarget) closeLightbox(); }}>
+        <div
+          className="gallery-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Preview foto ${activePhotoIndex + 1}`}
+          onMouseDown={(event) => { if (event.target === event.currentTarget) closeLightbox(); }}
+          onTouchStart={handleLightboxTouchStart}
+          onTouchEnd={handleLightboxTouchEnd}
+        >
           <div className="gallery-lightbox-glow" aria-hidden="true" />
           <div className="gallery-lightbox-panel">
             <button className="lightbox-close" type="button" onClick={closeLightbox} aria-label="Tutup preview foto"><X size={20} /></button>

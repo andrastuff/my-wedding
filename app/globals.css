@@ -521,6 +521,27 @@ img {
   text-overflow: ellipsis;
 }
 
+.envelope-open-hit-area {
+  position: absolute;
+  z-index: 7;
+  inset: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.envelope-open-hit-area:focus-visible {
+  outline: 2px solid #fff1bd;
+  outline-offset: 5px;
+}
+
+.envelope-open-hit-area:disabled {
+  cursor: default;
+}
+
 .wax-seal {
   position: absolute;
   /* Segel harus selalu menjadi area sentuh teratas, terutama di layar kecil. */
@@ -1818,6 +1839,8 @@ img {
   background: rgba(35, 9, 14, .91);
   backdrop-filter: blur(10px);
   animation: lightbox-in .35s ease both;
+  overscroll-behavior: contain;
+  touch-action: pan-y pinch-zoom;
 }
 
 .gallery-lightbox::before,

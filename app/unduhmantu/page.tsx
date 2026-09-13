@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { CalendarDays, Check, ChevronDown, ChevronLeft, ChevronRight, Copy, Gift, Heart, LoaderCircle, MailOpen, MapPin, Sparkles, UsersRound, Volume2, VolumeX, X } from "lucide-react";
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, type TouchEvent, useEffect, useRef, useState } from "react";
 import { wedding } from "@/lib/wedding-data";
 import styles from "./page.module.css";
 
@@ -84,9 +84,14 @@ function UnduhMantuContent({ guestName }: { guestName: string }) {
   const [copiedAccount, setCopiedAccount] = useState<string | null>(null);
   const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null);
   const [lightboxLoaded, setLightboxLoaded] = useState(false);
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
 
   useEffect(() => {
     if (activePhotoIndex === null) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
 
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") setActivePhotoIndex(null);
@@ -101,7 +106,10 @@ function UnduhMantuContent({ guestName }: { guestName: string }) {
     }
 
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, [activePhotoIndex]);
 
   function openPhoto(index: number) {
@@ -112,6 +120,23 @@ function UnduhMantuContent({ guestName }: { guestName: string }) {
   function movePhoto(direction: number) {
     setLightboxLoaded(false);
     setActivePhotoIndex((current) => current === null ? 0 : (current + direction + unduhMantuGallery.length) % unduhMantuGallery.length);
+  }
+
+  function handleLightboxTouchStart(event: TouchEvent<HTMLDivElement>) {
+    touchStartX.current = event.changedTouches[0].clientX;
+    touchStartY.current = event.changedTouches[0].clientY;
+  }
+
+  function handleLightboxTouchEnd(event: TouchEvent<HTMLDivElement>) {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+
+    const distanceX = event.changedTouches[0].clientX - touchStartX.current;
+    const distanceY = event.changedTouches[0].clientY - touchStartY.current;
+    touchStartX.current = null;
+    touchStartY.current = null;
+
+    if (Math.abs(distanceX) < 45 || Math.abs(distanceX) <= Math.abs(distanceY)) return;
+    movePhoto(distanceX > 0 ? -1 : 1);
   }
 
   async function copyAccountNumber(accountNumber: string) {
@@ -253,7 +278,14 @@ function UnduhMantuContent({ guestName }: { guestName: string }) {
       </section>
 
       {activePhotoIndex !== null && (
-        <div className={styles.lightbox} role="dialog" aria-modal="true" aria-label="Galeri foto">
+        <div
+          className={styles.lightbox}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Galeri foto"
+          onTouchStart={handleLightboxTouchStart}
+          onTouchEnd={handleLightboxTouchEnd}
+        >
           <button className={styles.lightboxClose} type="button" onClick={() => setActivePhotoIndex(null)} aria-label="Tutup galeri">
             <X size={22} />
           </button>
