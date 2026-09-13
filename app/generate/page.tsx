@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Copy, Heart, Link2 } from "lucide-react";
+import { Check, Copy, Heart, Link2, MessageCircle } from "lucide-react";
 import { useMemo, useState } from "react";
 import { wedding } from "@/lib/wedding-data";
 import styles from "./page.module.css";
@@ -46,6 +46,11 @@ export default function GenerateInvitationPage() {
     await navigator.clipboard.writeText(whatsappMessage);
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1800);
+  }
+
+  function shareToWhatsApp() {
+    if (!whatsappMessage) return;
+    window.open(`https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`, "_blank", "noopener,noreferrer");
   }
 
   return (
@@ -97,6 +102,9 @@ export default function GenerateInvitationPage() {
               <button className={styles.copy} type="button" onClick={copyInvitationUrl}>
                 {copied ? <Check size={17} /> : <Copy size={17} />}
                 {copied ? "Pesan tersalin" : "Salin pesan"}
+              </button>
+              <button className={styles.whatsapp} type="button" onClick={shareToWhatsApp}>
+                <MessageCircle size={17} /> Bagikan ke WhatsApp
               </button>
             </div>
           </div>

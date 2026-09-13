@@ -2,10 +2,18 @@
 
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { CalendarDays, ChevronDown, Heart, MailOpen, MapPin, Sparkles, UsersRound } from "lucide-react";
-import { Suspense, useState } from "react";
+import { CalendarDays, Check, ChevronDown, ChevronLeft, ChevronRight, Copy, Gift, Heart, LoaderCircle, MailOpen, MapPin, Sparkles, UsersRound, Volume2, VolumeX, X } from "lucide-react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { wedding } from "@/lib/wedding-data";
 import styles from "./page.module.css";
+
+const unduhMantuGallery = [
+  { src: "/assets/my/DSC_0889%20(1).jpg.jpeg", alt: "Ayu dan Ardi dalam busana Jawa 1" },
+  { src: "/assets/my/DSC_0838%20(1).jpg.jpeg", alt: "Ayu dan Ardi dalam busana Jawa 2" },
+  { src: "/assets/my/DSC_0872%20(1).jpg.jpeg", alt: "Ayu dan Ardi dalam busana Jawa 3" },
+  { src: "/assets/my/DSC_0701%20(1).jpg.jpeg", alt: "Ayu dan Ardi dalam busana adat Lampung 1" },
+  { src: "/assets/my/DSC_0680%20(2).jpg.jpeg", alt: "Ayu dan Ardi dalam busana adat Lampung 2" },
+];
 
 function formatGuestName(value: string) {
   return value
@@ -73,6 +81,44 @@ function OpeningCover({ guestName, onOpen }: { guestName: string; onOpen: () => 
 
 function UnduhMantuContent({ guestName }: { guestName: string }) {
   const hosts = wedding.unduhMantu.hosts;
+  const [copiedAccount, setCopiedAccount] = useState<string | null>(null);
+  const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null);
+  const [lightboxLoaded, setLightboxLoaded] = useState(false);
+
+  useEffect(() => {
+    if (activePhotoIndex === null) return;
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") setActivePhotoIndex(null);
+      if (event.key === "ArrowLeft") {
+        setLightboxLoaded(false);
+        setActivePhotoIndex((current) => current === null ? null : (current - 1 + unduhMantuGallery.length) % unduhMantuGallery.length);
+      }
+      if (event.key === "ArrowRight") {
+        setLightboxLoaded(false);
+        setActivePhotoIndex((current) => current === null ? null : (current + 1) % unduhMantuGallery.length);
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activePhotoIndex]);
+
+  function openPhoto(index: number) {
+    setLightboxLoaded(false);
+    setActivePhotoIndex(index);
+  }
+
+  function movePhoto(direction: number) {
+    setLightboxLoaded(false);
+    setActivePhotoIndex((current) => current === null ? 0 : (current + direction + unduhMantuGallery.length) % unduhMantuGallery.length);
+  }
+
+  async function copyAccountNumber(accountNumber: string) {
+    await navigator.clipboard.writeText(accountNumber.replace(/\s/g, ""));
+    setCopiedAccount(accountNumber);
+    window.setTimeout(() => setCopiedAccount(null), 1800);
+  }
 
   return (
     <main className={styles.invitation}>
@@ -179,17 +225,98 @@ function UnduhMantuContent({ guestName }: { guestName: string }) {
         <p className={styles.kicker}>Crita Katresnan</p>
         <h2>Sepenggal Kisah Kami</h2>
         <div className={styles.gallery}>
-          {[
-            "/assets/my/DSC_0889%20(1).jpg.jpeg",
-            "/assets/my/DSC_0838%20(1).jpg.jpeg",
-            "/assets/my/DSC_0872%20(1).jpg.jpeg",
-          ].map((photo, index) => (
-            <figure key={photo} className={index === 1 ? styles.galleryTall : undefined}>
-              <Image src={photo} alt={`Foto Ayu dan Ardi ${index + 1}`} fill sizes="(max-width: 720px) 45vw, 300px" />
-            </figure>
+          {unduhMantuGallery.map((photo, index) => (
+            <button
+              type="button"
+              key={photo.src}
+              className={index === 1 ? styles.galleryTall : undefined}
+              onClick={() => openPhoto(index)}
+              aria-label={`Buka ${photo.alt}`}
+            >
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                fill
+                sizes="(max-width: 720px) 45vw, 300px"
+              />
+            </button>
           ))}
         </div>
       </section>
+
+      {activePhotoIndex !== null && (
+        <div className={styles.lightbox} role="dialog" aria-modal="true" aria-label="Galeri foto">
+          <button className={styles.lightboxClose} type="button" onClick={() => setActivePhotoIndex(null)} aria-label="Tutup galeri">
+            <X size={22} />
+          </button>
+          <button
+            className={`${styles.lightboxNav} ${styles.lightboxPrevious}`}
+            type="button"
+            onClick={() => movePhoto(-1)}
+            aria-label="Foto sebelumnya"
+          >
+            <ChevronLeft size={25} />
+          </button>
+          <figure>
+            <div className={`${styles.lightboxLoader} ${lightboxLoaded ? styles.lightboxLoaderHidden : ""}`} role="status">
+              <LoaderCircle size={28} />
+              <span>Memuat foto…</span>
+            </div>
+            <Image
+              className={`${styles.lightboxImage} ${lightboxLoaded ? styles.lightboxImageLoaded : ""}`}
+              src={unduhMantuGallery[activePhotoIndex].src}
+              alt={unduhMantuGallery[activePhotoIndex].alt}
+              fill
+              priority
+              sizes="95vw"
+              onLoad={() => setLightboxLoaded(true)}
+              onError={() => setLightboxLoaded(true)}
+            />
+          </figure>
+          <button
+            className={`${styles.lightboxNav} ${styles.lightboxNext}`}
+            type="button"
+            onClick={() => movePhoto(1)}
+            aria-label="Foto berikutnya"
+          >
+            <ChevronRight size={25} />
+          </button>
+          <span className={styles.lightboxCount}>{activePhotoIndex + 1} / {unduhMantuGallery.length}</span>
+        </div>
+      )}
+
+      {wedding.giftAccounts.length > 0 && (
+        <>
+          <div className={styles.giftDivider} aria-hidden="true">
+              <Image src="/assets/javanese-section-transition.svg" alt="" width={680} height={70} unoptimized />
+          </div>
+          <section className={styles.giftSection}>
+            <div className={styles.giftIcon}><Gift size={21} /></div>
+            <p className={styles.kicker}>Tanda Kasih</p>
+            <h2>Wedding Gift</h2>
+            <p className={styles.giftLead}>
+              Doa restu Anda merupakan hadiah terindah bagi kami. Namun apabila hendak memberikan tanda kasih,
+              dapat disampaikan melalui rekening berikut.
+            </p>
+            <div className={styles.bankCards}>
+              {wedding.giftAccounts.map((account) => (
+                <div className={styles.bankCard} key={account.number}>
+                  <div className={styles.bankCardTop}>
+                    <span>{account.bank}</span>
+                    <i aria-hidden="true">A&A</i>
+                  </div>
+                  <strong>{account.number}</strong>
+                  <small>{account.holder}</small>
+                  <button type="button" onClick={() => copyAccountNumber(account.number)}>
+                    {copiedAccount === account.number ? <Check size={16} /> : <Copy size={16} />}
+                    {copiedAccount === account.number ? "Nomor tersalin" : "Salin nomor rekening"}
+                  </button>
+                </div>
+              ))}
+            </div>
+          </section>
+        </>
+      )}
 
       <footer className={styles.closing}>
         <div className={styles.closingIcon}><UsersRound size={22} /></div>
@@ -208,13 +335,44 @@ function UnduhMantuPageContent() {
   const requestedGuest = searchParams.get("for")?.slice(0, 70) ?? "";
   const guestName = formatGuestName(requestedGuest) || "Bapak/Ibu/Saudara/i";
   const [opened, setOpened] = useState(false);
+  const [musicPlaying, setMusicPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  function openInvitation() {
+    setOpened(true);
+    if (!audioRef.current) return;
+    audioRef.current.volume = .6;
+    void audioRef.current.play().then(() => setMusicPlaying(true)).catch(() => setMusicPlaying(false));
+  }
+
+  function toggleMusic() {
+    if (!audioRef.current) return;
+    if (audioRef.current.paused) {
+      void audioRef.current.play().then(() => setMusicPlaying(true)).catch(() => setMusicPlaying(false));
+      return;
+    }
+    audioRef.current.pause();
+    setMusicPlaying(false);
+  }
 
   return (
     <div className={styles.page}>
-      {!opened && <OpeningCover guestName={guestName} onOpen={() => setOpened(true)} />}
+      <audio ref={audioRef} src="/assets/audio/Banda-Neira-Sampai-Jadi-Debu.mp3" loop preload="auto" />
+      {!opened && <OpeningCover guestName={guestName} onOpen={openInvitation} />}
       <div className={opened ? styles.contentVisible : styles.contentHidden}>
         <UnduhMantuContent guestName={guestName} />
       </div>
+      {opened && (
+        <button
+          className={styles.musicControl}
+          type="button"
+          onClick={toggleMusic}
+          aria-label={musicPlaying ? "Matikan musik" : "Putar musik"}
+        >
+          {musicPlaying ? <Volume2 size={18} /> : <VolumeX size={18} />}
+          <span>{musicPlaying ? "Musik" : "Putar"}</span>
+        </button>
+      )}
     </div>
   );
 }

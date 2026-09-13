@@ -168,6 +168,9 @@
 }
 
 .actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
   margin-top: 16px;
 }
 
@@ -190,6 +193,21 @@
   cursor: pointer;
 }
 
+.whatsapp {
+  display: inline-flex;
+  width: 100%;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid #1f8f56;
+  border-radius: 11px;
+  color: #fff;
+  background: #25a965;
+  font: 700 11px var(--font-sans);
+  cursor: pointer;
+}
+
 .hint {
   margin: 18px 0 0;
   color: #8b766b;
@@ -199,4 +217,5 @@
 @media (max-width: 430px) {
   .page { padding: 22px 14px; }
   .card { padding: 29px 21px; }
+  .actions { grid-template-columns: 1fr; }
 }

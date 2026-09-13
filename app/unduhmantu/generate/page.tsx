@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Copy, Link2, UsersRound } from "lucide-react";
+import { Check, Copy, Link2, MessageCircle, UsersRound } from "lucide-react";
 import { useMemo, useState } from "react";
 import { wedding } from "@/lib/wedding-data";
 import styles from "./page.module.css";
@@ -48,6 +48,11 @@ export default function GenerateUnduhMantuPage() {
     await navigator.clipboard.writeText(value);
     setCopiedItem(item);
     window.setTimeout(() => setCopiedItem(null), 1800);
+  }
+
+  function shareToWhatsApp() {
+    if (!shareMessage) return;
+    window.open(`https://wa.me/?text=${encodeURIComponent(shareMessage)}`, "_blank", "noopener,noreferrer");
   }
 
   return (
@@ -104,6 +109,9 @@ export default function GenerateUnduhMantuPage() {
               <button type="button" onClick={() => copyText(shareMessage, "message")}>
                 {copiedItem === "message" ? <Check size={17} /> : <Copy size={17} />}
                 {copiedItem === "message" ? "Pesan tersalin" : "Salin pesan"}
+              </button>
+              <button className={styles.whatsapp} type="button" onClick={shareToWhatsApp}>
+                <MessageCircle size={17} /> Bagikan ke WhatsApp
               </button>
             </div>
           </div>
