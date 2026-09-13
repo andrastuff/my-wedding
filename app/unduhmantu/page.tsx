@@ -29,7 +29,7 @@ function OpeningCover({ guestName, onOpen }: { guestName: string; onOpen: () => 
       <div className={styles.coverPortrait}>
         <Image
           className={styles.coverPhoto}
-          src={wedding.unduhMantu.parentPortrait}
+          src={wedding.unduhMantu.coverPortrait}
           alt={`${wedding.unduhMantu.hosts.father} dan ${wedding.unduhMantu.hosts.mother}`}
           fill
           priority
@@ -170,6 +170,14 @@ function UnduhMantuContent({ guestName }: { guestName: string }) {
       </section>
 
       <section className={styles.coupleSection}>
+        <Image
+          className={styles.coupleBackground}
+          src="/assets/my/DSC_0680%20(2).jpg.jpeg"
+          alt="Ayu dan Ardi dalam busana adat Lampung"
+          fill
+          sizes="(max-width: 720px) 100vw, 680px"
+        />
+        <div className={styles.coupleOverlay} />
         <div className={styles.sectionHeading}>
           <Sparkles size={16} />
           <p>Putra-putri Kami</p>

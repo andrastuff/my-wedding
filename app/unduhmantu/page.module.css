@@ -26,9 +26,9 @@
 .coverPortrait {
   position: absolute;
   bottom: 24px;
-  left: -17%;
-  width: min(86%, 470px);
-  height: 58%;
+  left: -10%;
+  width: min(90%, 540px);
+  height: 64%;
   overflow: hidden;
   border: 1px solid rgba(226, 190, 120, .72);
   border-left: 0;
@@ -390,12 +390,29 @@
 .hostNames span { display: block; margin: 1px 0; color: #b38448; font: 400 24px var(--font-script); }
 
 .coupleSection {
+  position: relative;
+  overflow: hidden;
   padding: 80px 28px;
   color: #f8ead0;
   text-align: center;
-  background:
-    linear-gradient(135deg, rgba(57, 28, 17, .98), rgba(77, 42, 24, .96)),
-    url('/assets/shape.png') center / 280px repeat;
+  background: #382016;
+}
+
+.coupleBackground {
+  object-fit: cover;
+  object-position: center;
+}
+
+.coupleOverlay,
+.philosophyShade {
+  position: absolute;
+  inset: 0;
+  background: rgba(38, 18, 10, .58);
+}
+
+.sectionHeading,
+.coupleCard {
+  position: relative;
 }
 
 .sectionHeading > svg { color: #d7ae65; }
@@ -469,7 +486,6 @@
 }
 
 .philosophy > img { object-fit: cover; object-position: center; }
-.philosophyShade { position: absolute; inset: 0; background: rgba(38, 18, 10, .58); }
 .philosophy blockquote { position: relative; width: min(82%, 430px); margin: 0; font: 500 29px/1.2 var(--font-serif); }
 .philosophy blockquote > span { display: block; margin-bottom: 13px; color: #e3bd72; font-size: 28px; }
 .philosophy blockquote small { display: block; margin-top: 17px; color: rgba(255, 245, 223, .72); font: 500 11px/1.7 var(--font-sans); }
