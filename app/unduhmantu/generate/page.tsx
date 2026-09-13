@@ -26,7 +26,8 @@ export default function GenerateUnduhMantuPage() {
 
   const invitationUrl = useMemo(() => {
     if (!guestName || typeof window === "undefined") return "";
-    const url = new URL(`/unduhmantu/to/${encodeURIComponent(guestName)}`, window.location.origin);
+    const guestPath = encodeURIComponent(guestName).replaceAll("%20", "+");
+    const url = new URL(`/unduhmantu/to/${guestPath}`, window.location.origin);
     return url.toString();
   }, [guestName]);
 

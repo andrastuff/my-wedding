@@ -6,6 +6,14 @@ type GuestPageProps = {
   params: Promise<{ guest: string }>;
 };
 
+function decodeGuestName(value: string) {
+  try {
+    return decodeURIComponent(value).replaceAll("+", " ");
+  } catch {
+    return value.replaceAll("+", " ");
+  }
+}
+
 async function getRequestOrigin() {
   const requestHeaders = await headers();
   const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "localhost:3000";
@@ -15,7 +23,7 @@ async function getRequestOrigin() {
 
 export async function generateMetadata({ params }: GuestPageProps): Promise<Metadata> {
   const { guest } = await params;
-  const guestName = guest.slice(0, 70);
+  const guestName = decodeGuestName(guest).slice(0, 70);
   const origin = await getRequestOrigin();
   const imageUrl = new URL("/api/og", origin);
   imageUrl.searchParams.set("for", guestName);
@@ -34,5 +42,5 @@ export async function generateMetadata({ params }: GuestPageProps): Promise<Meta
 
 export default async function GuestInvitationPage({ params }: GuestPageProps) {
   const { guest } = await params;
-  return <WeddingPage initialGuestName={guest} />;
+  return <WeddingPage initialGuestName={decodeGuestName(guest)} />;
 }

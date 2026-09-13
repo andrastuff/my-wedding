@@ -110,7 +110,7 @@ img {
   filter: drop-shadow(0 3px 5px rgba(70, 33, 29, .2));
   transform: translate(-50%, -50%) scale(.45);
   will-change: transform, opacity;
-  animation: touch-flower-fade 1.45s ease-out forwards;
+  animation: touch-flower-fade 2.8s ease-out forwards;
 }
 
 /* Opening envelope */
@@ -2847,7 +2847,8 @@ img {
     opacity: 0;
     transform: translate(-50%, -50%) scale(.45) rotate(0deg);
   }
-  18% { opacity: .9; }
+  12% { opacity: .92; }
+  68% { opacity: .72; }
   100% {
     opacity: 0;
     transform: translate(calc(-50% + var(--flower-drift-x)), calc(-50% + var(--flower-drift-y))) scale(var(--flower-scale)) rotate(var(--flower-rotation));

@@ -15,11 +15,11 @@ export function TouchFlowerTrail() {
 
     let previousX: number | null = null;
     let previousY: number | null = null;
-    let lastFlowerAt = 0;
+    let hasEmittedForGesture = false;
 
     const createFlower = (x: number, y: number) => {
       const layer = layerRef.current;
-      if (!layer || layer.childElementCount >= 64) return;
+      if (!layer || layer.childElementCount >= 128) return;
 
       const flower = document.createElement("span");
       const size = 14 + Math.random() * 12;
@@ -29,8 +29,8 @@ export function TouchFlowerTrail() {
       flower.style.top = `${y}px`;
       flower.style.fontSize = `${size}px`;
       flower.style.color = flowerColors[Math.floor(Math.random() * flowerColors.length)];
-      flower.style.setProperty("--flower-drift-x", `${(Math.random() - .5) * 46}px`);
-      flower.style.setProperty("--flower-drift-y", `${-38 - Math.random() * 38}px`);
+      flower.style.setProperty("--flower-drift-x", `${(Math.random() - .5) * 90}px`);
+      flower.style.setProperty("--flower-drift-y", `${-70 - Math.random() * 65}px`);
       flower.style.setProperty("--flower-rotation", `${(Math.random() - .5) * 120}deg`);
       flower.style.setProperty("--flower-scale", `${.8 + Math.random() * .55}`);
       flower.addEventListener("animationend", () => flower.remove(), { once: true });
@@ -48,30 +48,26 @@ export function TouchFlowerTrail() {
       if (!touch) return;
       previousX = touch.clientX;
       previousY = touch.clientY;
+      hasEmittedForGesture = false;
     };
 
     const handleTouchMove = (event: TouchEvent) => {
       const touch = event.touches[0];
-      if (!touch || previousX === null || previousY === null) return;
+      if (!touch || previousX === null || previousY === null || hasEmittedForGesture) return;
 
       const distanceX = touch.clientX - previousX;
       const distanceY = touch.clientY - previousY;
-      const now = performance.now();
 
-      if (distanceY < -3 && Math.abs(distanceY) > Math.abs(distanceX) && now - lastFlowerAt >= 45) {
+      if (Math.abs(distanceY) >= 12 && Math.abs(distanceY) > Math.abs(distanceX)) {
         createFlowerBurst(touch.clientX, touch.clientY);
-        lastFlowerAt = now;
-      }
-
-      if (Math.hypot(distanceX, distanceY) >= 10) {
-        previousX = touch.clientX;
-        previousY = touch.clientY;
+        hasEmittedForGesture = true;
       }
     };
 
     const resetTouch = () => {
       previousX = null;
       previousY = null;
+      hasEmittedForGesture = false;
     };
 
     window.addEventListener("touchstart", handleTouchStart, { passive: true });
