@@ -18,6 +18,11 @@ export const wedding = {
   unduhMantu: {
     displayDate: "Minggu, 27 September 2026",
     address: "Desa Sinar Seputih, RT.001/RW.001, Kec. Bangunrejo, Lampung Tengah",
+    hosts: {
+      father: "Bapak Agus Hartoyo",
+      mother: "Ibu Sri Suwarni",
+    },
+    parentPortrait: "/assets/my/orangtua.jpeg",
     mapUrl:
       "https://www.google.com/maps/place/5%C2%B007'45.0%22S+105%C2%B003'03.2%22E/@-5.1291577,105.0483231,17z/data=!3m1!4b1!4m4!3m3!8m2!3d-5.129163!4d105.050898?authuser=0&entry=ttu&g_ep=EgoyMDI2MDgyNi4wIKXMDSoASAFQAw%3D%3D",
   },

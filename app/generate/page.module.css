@@ -89,6 +89,57 @@
   box-shadow: 0 0 0 4px rgba(207, 166, 84, .16);
 }
 
+.messageStyle {
+  margin: 18px 0 0;
+  padding: 0;
+  border: 0;
+  text-align: left;
+}
+
+.messageStyle legend {
+  margin-bottom: 8px;
+  color: #684950;
+  font: 700 11px var(--font-sans);
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.styleOptions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  padding: 5px;
+  border: 1px solid rgba(139, 88, 58, .24);
+  border-radius: 13px;
+  background: rgba(255, 253, 248, .72);
+}
+
+.styleOption,
+.styleActive {
+  min-height: 40px;
+  border: 0;
+  border-radius: 9px;
+  font: 700 12px var(--font-sans);
+  cursor: pointer;
+}
+
+.styleOption {
+  color: #80686b;
+  background: transparent;
+}
+
+.styleActive {
+  color: #fff8e9;
+  background: linear-gradient(145deg, #8e3943, #5e2029);
+  box-shadow: 0 5px 13px rgba(78, 20, 29, .2);
+}
+
+.styleOption:focus-visible,
+.styleActive:focus-visible {
+  outline: 3px solid rgba(181, 132, 57, .35);
+  outline-offset: 2px;
+}
+
 .result {
   margin-top: 20px;
   padding: 17px;

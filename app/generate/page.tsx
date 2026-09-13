@@ -2,7 +2,10 @@
 
 import { Check, Copy, Heart, Link2 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { wedding } from "@/lib/wedding-data";
 import styles from "./page.module.css";
+
+type MessageStyle = "muslim" | "general";
 
 function formatGuestName(value: string) {
   return value
@@ -14,6 +17,7 @@ function formatGuestName(value: string) {
 
 export default function GenerateInvitationPage() {
   const [name, setName] = useState("");
+  const [messageStyle, setMessageStyle] = useState<MessageStyle>("muslim");
   const [copied, setCopied] = useState(false);
   const guestName = formatGuestName(name);
 
@@ -26,8 +30,16 @@ export default function GenerateInvitationPage() {
 
   const whatsappMessage = useMemo(() => {
     if (!invitationUrl) return "";
-    return `Assalamu'alaikum Wr. Wb.\n\nDengan penuh kebahagiaan, kami bermaksud untuk mengundang Bpk/Ibu *${guestName}* untuk hadir dalam acara pernikahan kami.\n\nBerikut kami lampirkan undangan lengkapnya di bawah ini:\n${invitationUrl}\n\nTerima kasih atas doa dan kehadirannya.\n\nAyu & Ardi`;
-  }, [guestName, invitationUrl]);
+
+    const coupleName = `${wedding.bride.shortName} & ${wedding.groom.shortName}`;
+    const eventDetails = `*${coupleName}*\n\nYang akan dilaksanakan pada:\n🗓️ ${wedding.displayDate}\n⏰ Akad Nikah: ${wedding.akad}\n⏰ Resepsi: ${wedding.reception}\n📍 ${wedding.address}\n\nInformasi lengkap acara kami:\n${invitationUrl}\n\nMohon berkenan mengisi ucapan dan konfirmasi kehadiran. Terima kasih.`;
+
+    if (messageStyle === "general") {
+      return `Dengan penuh sukacita,\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i *${guestName}* untuk hadir dan memberikan doa restu pada acara pernikahan kami:\n\n${eventDetails}\n\nHormat kami,\n*${coupleName.toLocaleUpperCase("id-ID")}*`;
+    }
+
+    return `Assalamu'alaikum Wr. Wb.\nBismillahirrahmanirrahim.\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i *${guestName}* untuk hadir dan memberikan doa restu pada acara pernikahan kami:\n\n${eventDetails}\n\nWassalamu'alaikum Wr. Wb.\n\nHormat kami,\n*${coupleName.toLocaleUpperCase("id-ID")}*`;
+  }, [guestName, invitationUrl, messageStyle]);
 
   async function copyInvitationUrl() {
     if (!whatsappMessage) return;
@@ -54,6 +66,28 @@ export default function GenerateInvitationPage() {
           placeholder="Contoh: Budi Santoso"
           autoComplete="name"
         />
+
+        <fieldset className={styles.messageStyle}>
+          <legend>Jenis pesan</legend>
+          <div className={styles.styleOptions}>
+            <button
+              className={messageStyle === "muslim" ? styles.styleActive : styles.styleOption}
+              type="button"
+              aria-pressed={messageStyle === "muslim"}
+              onClick={() => setMessageStyle("muslim")}
+            >
+              Muslim
+            </button>
+            <button
+              className={messageStyle === "general" ? styles.styleActive : styles.styleOption}
+              type="button"
+              aria-pressed={messageStyle === "general"}
+              onClick={() => setMessageStyle("general")}
+            >
+              Non-Muslim
+            </button>
+          </div>
+        </fieldset>
 
         {guestName ? (
           <div className={styles.result}>
