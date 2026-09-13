@@ -21,6 +21,8 @@ import {
   Sparkles,
   UserRound,
   UsersRound,
+  Volume2,
+  VolumeX,
   X,
 } from "lucide-react";
 import { FormEvent, Suspense, type TouchEvent, useEffect, useMemo, useRef, useState } from "react";
@@ -574,6 +576,7 @@ function WeddingInvitation({ initialGuestName }: { initialGuestName?: string }) 
       : "Bapak/Ibu/Saudara/i";
   const [stage, setStage] = useState<OpeningStage>("sealed");
   const [countdown, setCountdown] = useState<Countdown>(emptyCountdown);
+  const [musicPlaying, setMusicPlaying] = useState(false);
   const musicRef = useRef<HTMLAudioElement>(null);
   const opened = stage === "opened";
 
@@ -609,9 +612,9 @@ function WeddingInvitation({ initialGuestName }: { initialGuestName?: string }) 
       music.currentTime = 0;
       music.muted = true;
       music.volume = 0.60;
-      void music.play().catch(() => {
-        // Browser dapat memblokir audio pada mode hemat data atau pengaturan khusus pengguna.
-      });
+      void music.play()
+        .then(() => setMusicPlaying(true))
+        .catch(() => setMusicPlaying(false));
     }
     setStage("flap");
     window.setTimeout(() => setStage("letter"), 950);
@@ -626,6 +629,23 @@ function WeddingInvitation({ initialGuestName }: { initialGuestName?: string }) 
       setStage("opened");
       window.scrollTo({ top: 0 });
     }, 4350);
+  };
+
+  const toggleMusic = () => {
+    const music = musicRef.current;
+    if (!music) return;
+
+    if (music.paused) {
+      music.muted = false;
+      music.volume = 0.60;
+      void music.play()
+        .then(() => setMusicPlaying(true))
+        .catch(() => setMusicPlaying(false));
+      return;
+    }
+
+    music.pause();
+    setMusicPlaying(false);
   };
 
   const mainClass = useMemo(() => `invitation-shell ${opened ? "is-open" : ""}`, [opened]);
@@ -647,6 +667,17 @@ function WeddingInvitation({ initialGuestName }: { initialGuestName?: string }) 
         <WishesSection />
         <ClosingSection />
       </div>
+      {opened && (
+        <button
+          className="main-music-control"
+          type="button"
+          onClick={toggleMusic}
+          aria-label={musicPlaying ? "Matikan musik" : "Putar musik"}
+          title={musicPlaying ? "Matikan musik" : "Putar musik"}
+        >
+          {musicPlaying ? <Volume2 size={19} /> : <VolumeX size={19} />}
+        </button>
+      )}
       {opened && <FloatingNav />}
     </main>
   );

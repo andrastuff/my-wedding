@@ -19,7 +19,7 @@ export function TouchFlowerTrail() {
 
     const createFlower = (x: number, y: number) => {
       const layer = layerRef.current;
-      if (!layer || layer.childElementCount >= 128) return;
+      if (!layer || layer.childElementCount >= 192) return;
 
       const flower = document.createElement("span");
       const size = 14 + Math.random() * 12;
@@ -38,7 +38,7 @@ export function TouchFlowerTrail() {
     };
 
     const createFlowerBurst = (x: number, y: number) => {
-      for (let index = 0; index < 8; index += 1) {
+      for (let index = 0; index < 12; index += 1) {
         createFlower(x, y);
       }
     };
