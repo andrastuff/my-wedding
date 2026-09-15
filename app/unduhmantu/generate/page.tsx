@@ -7,6 +7,15 @@ import styles from "./page.module.css";
 
 type MessageStyle = "muslim" | "general";
 type CopiedItem = "link" | "message" | null;
+type RecipientTitle = "general" | "bapak" | "ibu" | "saudara" | "saudari";
+
+const recipientTitles: Record<RecipientTitle, string> = {
+  general: "Bapak/Ibu/Saudara/i",
+  bapak: "Bapak",
+  ibu: "Ibu",
+  saudara: "Saudara",
+  saudari: "Saudari",
+};
 
 function formatGuestName(value: string) {
   return value
@@ -18,6 +27,7 @@ function formatGuestName(value: string) {
 
 export default function GenerateUnduhMantuPage() {
   const [name, setName] = useState("");
+  const [recipientTitle, setRecipientTitle] = useState<RecipientTitle>("general");
   const [messageStyle, setMessageStyle] = useState<MessageStyle>("muslim");
   const [copiedItem, setCopiedItem] = useState<CopiedItem>(null);
   const guestName = formatGuestName(name);
@@ -34,14 +44,15 @@ export default function GenerateUnduhMantuPage() {
   const shareMessage = useMemo(() => {
     if (!invitationUrl) return "";
 
-    const invitation = `Tanpa mengurangi rasa hormat, kami ${hosts.father} & ${hosts.mother} bermaksud mengundang Bapak/Ibu/Saudara/i *${guestName}* untuk menghadiri acara Unduh Mantu dalam rangka pernikahan putra-putri kami:\n\n*${coupleName}*\n\nYang akan dilaksanakan pada:\n🗓️ ${wedding.unduhMantu.displayDate}\n📍 ${wedding.unduhMantu.address}\n\nInformasi lengkap acara:\n${invitationUrl}`;
+    const recipient = `Yth. ${recipientTitles[recipientTitle]} *${guestName}*,`;
+    const invitation = `Tanpa mengurangi rasa hormat, kami ${hosts.father} & ${hosts.mother} bermaksud mengundang ${recipientTitles[recipientTitle]} *${guestName}* untuk menghadiri acara Unduh Mantu dalam rangka pernikahan putra-putri kami:\n\n*${coupleName}*\n\nYang akan dilaksanakan pada:\n🗓️ ${wedding.unduhMantu.displayDate}\n📍 ${wedding.unduhMantu.address}\n\nInformasi lengkap acara:\n${invitationUrl}`;
 
     if (messageStyle === "general") {
-      return `Dengan penuh sukacita,\n\n${invitation}\n\nHormat kami,\n*Keluarga ${hosts.father} & ${hosts.mother}*`;
+      return `Dengan penuh sukacita,\n\n${recipient}\n\n${invitation}\n\nHormat kami,\n*Keluarga ${hosts.father} & ${hosts.mother}*`;
     }
 
-    return `Assalamu'alaikum Wr. Wb.\nBismillahirrahmanirrahim.\n\n${invitation}\n\nWassalamu'alaikum Wr. Wb.\n\nHormat kami,\n*Keluarga ${hosts.father} & ${hosts.mother}*`;
-  }, [coupleName, guestName, hosts.father, hosts.mother, invitationUrl, messageStyle]);
+    return `Assalamu'alaikum Wr. Wb.\nBismillahirrahmanirrahim.\n\n${recipient}\n\n${invitation}\n\nWassalamu'alaikum Wr. Wb.\n\nHormat kami,\n*Keluarga ${hosts.father} & ${hosts.mother}*`;
+  }, [coupleName, guestName, hosts.father, hosts.mother, invitationUrl, messageStyle, recipientTitle]);
 
   async function copyText(value: string, item: Exclude<CopiedItem, null>) {
     if (!value) return;
@@ -73,6 +84,20 @@ export default function GenerateUnduhMantuPage() {
           placeholder="Contoh: Budi Santoso"
           autoComplete="name"
         />
+
+        <label className={styles.label} htmlFor="recipient-title">Sapaan penerima</label>
+        <select
+          id="recipient-title"
+          className={styles.input}
+          value={recipientTitle}
+          onChange={(event) => setRecipientTitle(event.target.value as RecipientTitle)}
+        >
+          <option value="general">Umum (Bapak/Ibu/Saudara/i)</option>
+          <option value="bapak">Bapak</option>
+          <option value="ibu">Ibu</option>
+          <option value="saudara">Saudara</option>
+          <option value="saudari">Saudari</option>
+        </select>
 
         <fieldset className={styles.messageStyle}>
           <legend>Jenis pesan</legend>

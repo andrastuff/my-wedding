@@ -5,7 +5,16 @@ import { useMemo, useState } from "react";
 import { wedding } from "@/lib/wedding-data";
 import styles from "./page.module.css";
 
-type MessageStyle = "muslim" | "general";
+type MessageStyle = "muslim" | "general" | "friend";
+type RecipientTitle = "general" | "bapak" | "ibu" | "saudara" | "saudari";
+
+const recipientTitles: Record<RecipientTitle, string> = {
+  general: "Bapak/Ibu/Saudara/i",
+  bapak: "Bapak",
+  ibu: "Ibu",
+  saudara: "Saudara",
+  saudari: "Saudari",
+};
 
 function formatGuestName(value: string) {
   return value
@@ -17,6 +26,7 @@ function formatGuestName(value: string) {
 
 export default function GenerateInvitationPage() {
   const [name, setName] = useState("");
+  const [recipientTitle, setRecipientTitle] = useState<RecipientTitle>("general");
   const [messageStyle, setMessageStyle] = useState<MessageStyle>("muslim");
   const [copied, setCopied] = useState(false);
   const guestName = formatGuestName(name);
@@ -32,14 +42,20 @@ export default function GenerateInvitationPage() {
     if (!invitationUrl) return "";
 
     const coupleName = `${wedding.bride.shortName} & ${wedding.groom.shortName}`;
-    const eventDetails = `*${coupleName}*\n\nYang akan dilaksanakan pada:\n🗓️ ${wedding.displayDate}\n⏰ Akad Nikah: ${wedding.akad}\n⏰ Resepsi: ${wedding.reception}\n📍 ${wedding.address}\n\nInformasi lengkap acara kami:\n${invitationUrl}`;
+    const recipient = `Yth. ${recipientTitles[recipientTitle]} *${guestName}*,`;
+    const eventDetails = `*${coupleName}*\n\nYang akan dilaksanakan pada:\n🗓️ ${wedding.displayDate}\n⏰ Akad Nikah: ${wedding.akad}\n📍 ${wedding.address}\n\nInformasi lengkap acara kami:\n${invitationUrl}`;
+    const attendanceMessage = "Merupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan untuk hadir dan memberikan doa restu.";
 
-    if (messageStyle === "general") {
-      return `Dengan penuh sukacita,\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i *${guestName}* untuk hadir dan memberikan doa restu pada acara pernikahan kami:\n\n${eventDetails}\n\nHormat kami,\n*${coupleName.toLocaleUpperCase("id-ID")}*`;
+    if (messageStyle === "friend") {
+      return `Assalamu'alaikum Wr. Wb.\nBismillahirrahmanirrahim.\n\n${recipient}\n\nDengan memohon rahmat dan rida Allah SWT, kami bermaksud mengundang ${recipientTitles[recipientTitle]} *${guestName}* untuk hadir dan menjadi bagian dari hari bahagia pernikahan kami:\n\n${eventDetails}\n\nKehadiran serta doa restu dari ${recipientTitles[recipientTitle]} akan menjadi kebahagiaan yang sangat berarti bagi kami.\n\nWassalamu'alaikum Wr. Wb.\n\nSalam hangat,\n*${coupleName.toLocaleUpperCase("id-ID")}*`;
     }
 
-    return `Assalamu'alaikum Wr. Wb.\nBismillahirrahmanirrahim.\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i *${guestName}* untuk hadir dan memberikan doa restu pada acara pernikahan kami:\n\n${eventDetails}\n\nWassalamu'alaikum Wr. Wb.\n\nHormat kami,\n*${coupleName.toLocaleUpperCase("id-ID")}*`;
-  }, [guestName, invitationUrl, messageStyle]);
+    if (messageStyle === "general") {
+      return `Dengan penuh sukacita,\n\n${recipient}\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang ${recipientTitles[recipientTitle]} *${guestName}* untuk hadir dan memberikan doa restu pada acara pernikahan kami:\n\n${eventDetails}\n\n${attendanceMessage}\n\nHormat kami,\n*${coupleName.toLocaleUpperCase("id-ID")}*`;
+    }
+
+    return `Assalamu'alaikum Wr. Wb.\nBismillahirrahmanirrahim.\n\n${recipient}\n\nDengan memohon rahmat dan ridho Allah SWT, Tanpa mengurangi rasa hormat, perkenankan kami mengundang ${recipientTitles[recipientTitle]} *${guestName}* untuk hadir dan memberikan doa restu pada acara pernikahan kami:\n\n${eventDetails}\n\n${attendanceMessage}\n\nWassalamu'alaikum Wr. Wb.\n\nHormat kami,\n*${coupleName.toLocaleUpperCase("id-ID")}*`;
+  }, [guestName, invitationUrl, messageStyle, recipientTitle]);
 
   async function copyInvitationUrl() {
     if (!whatsappMessage) return;
@@ -72,6 +88,20 @@ export default function GenerateInvitationPage() {
           autoComplete="name"
         />
 
+        <label className={styles.label} htmlFor="recipient-title">Sapaan penerima</label>
+        <select
+          id="recipient-title"
+          className={styles.input}
+          value={recipientTitle}
+          onChange={(event) => setRecipientTitle(event.target.value as RecipientTitle)}
+        >
+          <option value="general">Umum (Bapak/Ibu/Saudara/i)</option>
+          <option value="bapak">Bapak</option>
+          <option value="ibu">Ibu</option>
+          <option value="saudara">Saudara</option>
+          <option value="saudari">Saudari</option>
+        </select>
+
         <fieldset className={styles.messageStyle}>
           <legend>Jenis pesan</legend>
           <div className={styles.styleOptions}>
@@ -90,6 +120,14 @@ export default function GenerateInvitationPage() {
               onClick={() => setMessageStyle("general")}
             >
               Non-Muslim
+            </button>
+            <button
+              className={messageStyle === "friend" ? styles.styleActive : styles.styleOption}
+              type="button"
+              aria-pressed={messageStyle === "friend"}
+              onClick={() => setMessageStyle("friend")}
+            >
+              Sahabat
             </button>
           </div>
         </fieldset>

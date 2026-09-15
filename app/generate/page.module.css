@@ -63,13 +63,15 @@
 
 .label {
   display: block;
-  margin-bottom: 8px;
+  margin: 14px 0 8px;
   color: #684950;
   font: 700 11px var(--font-sans);
   letter-spacing: .09em;
   text-align: left;
   text-transform: uppercase;
 }
+
+.label:first-of-type { margin-top: 0; }
 
 .input {
   box-sizing: border-box;
@@ -106,7 +108,7 @@
 
 .styleOptions {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
   padding: 5px;
   border: 1px solid rgba(139, 88, 58, .24);

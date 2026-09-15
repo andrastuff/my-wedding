@@ -653,7 +653,7 @@ function WeddingInvitation({ initialGuestName }: { initialGuestName?: string }) 
   return (
     <main className={mainClass}>
       <audio ref={musicRef} loop preload="auto" playsInline>
-        <source src="/assets/audio/easy-on-me.webm" type="audio/webm" />
+        <source src="/assets/audio/Banda-Neira-Sampai-Jadi-Debu.mp3" type="audio/mpeg" />
       </audio>
       {!opened && <OpeningEnvelope guestName={guestName} onOpen={openInvitation} stage={stage} />}
       <div className="invitation-page" aria-hidden={!opened}>

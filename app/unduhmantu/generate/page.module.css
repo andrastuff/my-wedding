@@ -50,7 +50,8 @@
 .intro { max-width: 360px; margin: 0 auto 28px; color: #79665a; font: 500 12px/1.7 var(--font-sans); text-align: center; }
 .label,
 .messageStyle legend { color: #6b4b38; font: 700 10px var(--font-sans); letter-spacing: .1em; text-transform: uppercase; }
-.label { display: block; margin-bottom: 8px; }
+.label { display: block; margin: 14px 0 8px; }
+.label:first-of-type { margin-top: 0; }
 
 .input {
   box-sizing: border-box;
