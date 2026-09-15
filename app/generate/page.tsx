@@ -42,9 +42,10 @@ export default function GenerateInvitationPage() {
     if (!invitationUrl) return "";
 
     const coupleName = `${wedding.bride.shortName} & ${wedding.groom.shortName}`;
+    const selectedTitle = recipientTitles[recipientTitle];
     const recipient = `Yth. ${recipientTitles[recipientTitle]} *${guestName}*,`;
-    const eventDetails = `*${coupleName}*\n\nYang akan dilaksanakan pada:\n🗓️ ${wedding.displayDate}\n⏰ Akad Nikah: ${wedding.akad}\n📍 ${wedding.address}\n\nInformasi lengkap acara kami:\n${invitationUrl}`;
-    const attendanceMessage = "Merupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan untuk hadir dan memberikan doa restu.";
+    const eventDetails = `*${coupleName}*\n\nYang akan dilaksanakan pada:\n🗓️ ${wedding.displayDate}\n⏰ Akad Nikah: ${wedding.akad}\n📍 ${wedding.address}\n\nUntuk informasi lengkap acara kami, ${selectedTitle} dapat mengakses undangan melalui tautan berikut:\n${invitationUrl}`;
+    const attendanceMessage = `Merupakan suatu kebahagiaan bagi kami apabila ${selectedTitle} berkenan untuk hadir dan memberikan doa restu.`;
 
     if (messageStyle === "friend") {
       return `Assalamu'alaikum Wr. Wb.\nBismillahirrahmanirrahim.\n\n${recipient}\n\nDengan memohon rahmat dan rida Allah SWT, kami bermaksud mengundang ${recipientTitles[recipientTitle]} *${guestName}* untuk hadir dan menjadi bagian dari hari bahagia pernikahan kami:\n\n${eventDetails}\n\nKehadiran serta doa restu dari ${recipientTitles[recipientTitle]} akan menjadi kebahagiaan yang sangat berarti bagi kami.\n\nWassalamu'alaikum Wr. Wb.\n\nSalam hangat,\n*${coupleName.toLocaleUpperCase("id-ID")}*`;

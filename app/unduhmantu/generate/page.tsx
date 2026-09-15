@@ -44,8 +44,9 @@ export default function GenerateUnduhMantuPage() {
   const shareMessage = useMemo(() => {
     if (!invitationUrl) return "";
 
+    const selectedTitle = recipientTitles[recipientTitle];
     const recipient = `Yth. ${recipientTitles[recipientTitle]} *${guestName}*,`;
-    const invitation = `Tanpa mengurangi rasa hormat, kami ${hosts.father} & ${hosts.mother} bermaksud mengundang ${recipientTitles[recipientTitle]} *${guestName}* untuk menghadiri acara Unduh Mantu dalam rangka pernikahan putra-putri kami:\n\n*${coupleName}*\n\nYang akan dilaksanakan pada:\n🗓️ ${wedding.unduhMantu.displayDate}\n📍 ${wedding.unduhMantu.address}\n\nInformasi lengkap acara:\n${invitationUrl}`;
+    const invitation = `Tanpa mengurangi rasa hormat, kami ${hosts.father} & ${hosts.mother} bermaksud mengundang ${selectedTitle} *${guestName}* untuk menghadiri acara Unduh Mantu dalam rangka pernikahan putra-putri kami:\n\n*${coupleName}*\n\nYang akan dilaksanakan pada:\n🗓️ ${wedding.unduhMantu.displayDate}\n📍 ${wedding.unduhMantu.address}\n\nUntuk informasi lengkap acara, ${selectedTitle} dapat mengakses undangan melalui tautan berikut:\n${invitationUrl}`;
 
     if (messageStyle === "general") {
       return `Dengan penuh sukacita,\n\n${recipient}\n\n${invitation}\n\nHormat kami,\n*Keluarga ${hosts.father} & ${hosts.mother}*`;
