@@ -41,7 +41,7 @@ export default function GenerateInvitationPage() {
   const whatsappMessage = useMemo(() => {
     if (!invitationUrl) return "";
 
-    const coupleName = `${wedding.bride.shortName} & ${wedding.groom.shortName}`;
+    const coupleName = `${wedding.bride.shortName} & ${wedding.groom.shortName} (andra)`;
     const selectedTitle = recipientTitles[recipientTitle];
     const recipient = `Yth. ${recipientTitles[recipientTitle]} *${guestName}*,`;
     const eventDetails = `*${coupleName}*\n\nYang akan dilaksanakan pada:\n🗓️ ${wedding.displayDate}\n⏰ Akad Nikah: ${wedding.akad}\n📍 ${wedding.address}\n\nUntuk informasi lengkap acara kami, ${selectedTitle} dapat mengakses undangan melalui tautan berikut:\n${invitationUrl}`;
